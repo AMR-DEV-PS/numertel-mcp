@@ -100,15 +100,36 @@ Transport: streamable HTTP (JSON-RPC 2.0). Limit: 30 requests/day/IP.
 
 ## Tools
 
-- **check_phone_number** — looks up a Polish number. Returns operator (original
-  UKE range, with an MNP note), risk label from user reports, UKE **DNO
+- **check_phone_number** — full reputation card for a Polish number: operator
+  (original UKE range, MNP note), risk label from user reports, UKE **DNO
   registry** status (an *incoming* call from a DNO number is spoofed by
-  definition), verified official-hotline whitelist entry and report counts.
-  Inputs: `number` (string, 9 digits; `+48` and spaces are stripped).
-  Read-only.
-- **pogoda_spamowa** — current phone-abuse indicators for Poland: new scam
-  domains on CERT Polska's Warning List (today / 7 / 30 days) and the DNO
-  registry size. No inputs. Read-only, open data (CC-BY).
+  definition), verified official-hotline whitelist, report counts.
+  Inputs: `number` (string, 9 digits). Read-only, structured output.
+- **pogoda_spamowa** — phone-abuse indicators for Poland: new scam domains on
+  CERT Polska's Warning List (today + daily series), DNO registry size and the
+  latest numbers from official warnings. Inputs: `days` (1-30, default 7).
+  Read-only, structured output, open data (CC-BY).
+- **search** — a Polish phone number OR an institution name (returns verified
+  official hotlines from the whitelist). ChatGPT deep-research compatible.
+- **fetch** — full card by `id` from search results.
+
+## Prompts
+
+Ready-made actions that appear in Claude's "+" menu under the NumerTel brand:
+`sprawdz_numer` (full number analysis with fresh embedded data),
+`przeanalizuj_sms` (scam analysis of a pasted SMS — runs on the client's
+model), `pogoda_spamowa_dzis` (today's phone-abuse report for Poland).
+
+## Also works in
+
+- **ChatGPT** (Plus/Pro, incl. Poland): Settings -> Apps & Connectors ->
+  Advanced -> Developer mode -> Create connector -> paste
+  `https://numertel.pl/api/mcp` (No authentication).
+- **Gemini CLI**: `{"mcpServers":{"numertel":{"httpUrl":"https://numertel.pl/api/mcp"}}}`
+- **Microsoft Copilot Studio**: Tools -> Add Tool -> MCP -> paste the URL.
+
+Higher limits: API key via `Authorization: Bearer` header
+(kontakt@numertel.pl).
 
 Example response (shortened):
 

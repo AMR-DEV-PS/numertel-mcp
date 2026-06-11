@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "pl.numertel/numertel",
   "description": "Polish phone number lookup: who called, spam and scam checks, UKE DNO registry, CERT phishing stats",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "repository": {
     "url": "https://github.com/AMR-DEV-PS/numertel-mcp",
     "source": "github"
