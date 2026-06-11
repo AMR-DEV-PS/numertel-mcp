@@ -1,5 +1,7 @@
 ![NumerTel MCP Server](assets/banner.png)
 
+**English** · [Polski](#numertel-mcp-server-po-polsku)
+
 # NumerTel MCP Server
 
 Check **Polish phone numbers** from any AI assistant: who called, is it spam or
@@ -166,3 +168,102 @@ results publicly; aggregate datasets are CC-BY 4.0.
 
 MIT (this client and manifest). The NumerTel.pl service itself is a separate,
 proprietary product.
+
+---
+
+# NumerTel MCP Server (po polsku)
+
+Sprawdzaj **polskie numery telefonów** z poziomu dowolnego asystenta AI: kto
+dzwonił, czy to spam lub oszustwo, czy numer naprawdę należy do banku. Do tego
+bieżące wskaźniki nadużyć telefonicznych w Polsce.
+
+Za serwerem stoi [NumerTel.pl](https://numertel.pl): 130 mln numerów na bazie
+oficjalnych zakresów UKE, opinie użytkowników, państwowy **wykaz DNO** i jawna
+Lista Ostrzeżeń CERT Polska.
+
+## Serwer zdalny (zalecany)
+
+Jeden adres, zero instalacji:
+
+```
+https://numertel.pl/api/mcp
+```
+
+Konfiguracja działająca w większości klientów MCP:
+
+```json
+{
+  "mcpServers": {
+    "numertel": {
+      "type": "http",
+      "url": "https://numertel.pl/api/mcp"
+    }
+  }
+}
+```
+
+W Claude Code wystarczy: `claude mcp add --transport http numertel https://numertel.pl/api/mcp`.
+Przyciski szybkiej instalacji dla Cursor i VS Code znajdziesz na górze strony.
+Transport: streamable HTTP (JSON-RPC 2.0). Limit: 30 zapytań dziennie na adres IP.
+
+## Zapytaj asystenta
+
+- „Kto dzwonił z numeru 500 100 200?"
+- „Czy 22 598 40 44 to prawdziwy numer banku, czy oszustwo?"
+- „Jaka jest dziś skala phishingu w Polsce?"
+
+## Narzędzia
+
+- **check_phone_number** zwraca operatora (pierwotny zakres UKE z notą o
+  przenośności), etykietę ryzyka z opinii, status w wykazie DNO UKE
+  (połączenie *przychodzące* z numeru DNO jest z definicji sfałszowane),
+  wpis z Białej Listy oficjalnych infolinii i liczniki zgłoszeń.
+  Wejście: `number` (string, 9 cyfr, `+48` i spacje są usuwane). Tylko odczyt.
+- **pogoda_spamowa** zwraca bieżące wskaźniki nadużyć w Polsce: nowe domeny
+  oszustów na Liście Ostrzeżeń CERT (dziś / 7 / 30 dni) i rozmiar wykazu DNO.
+  Bez parametrów. Tylko odczyt, dane otwarte (CC-BY).
+
+## Wariant lokalny (stdio, jeden plik)
+
+Dla klientów obsługujących wyłącznie stdio. Wymaga Node 18+. Pobierz
+[`numertel-mcp.mjs`](https://numertel.pl/numertel-mcp.mjs) (plik jest też w tym repo):
+
+```json
+{
+  "mcpServers": {
+    "numertel": {
+      "command": "node",
+      "args": ["/sciezka/do/numertel-mcp.mjs"],
+      "env": { "NUMERTEL_API_KEY": "(opcjonalnie, wyzszy limit)" }
+    }
+  }
+}
+```
+
+## REST API
+
+Te same dane przez zwykły REST, dokumentacja:
+[numertel.pl/dla-deweloperow](https://numertel.pl/dla-deweloperow).
+`GET https://numertel.pl/api/v1/check/{numer}` (20 zapytań/dzień/IP bez klucza)
+oraz `GET https://numertel.pl/api/v1/spam-weather` (bez limitu, CC-BY).
+Wyższe limity i klucze API: kontakt@numertel.pl
+
+## Rozwiązywanie problemów
+
+- **Klient nie wspiera zdalnych serwerów MCP**: użyj mostka `mcp-remote`
+  (sekcja Claude Desktop wyżej) albo pliku stdio.
+- **HTTP 429**: wyczerpany dzienny limit darmowy, spróbuj jutro lub napisz po klucz.
+- **„Numer spoza znanych zakresów" (404)**: numer jest spoza polskiej numeracji,
+  podaj 9 cyfr w formacie krajowym.
+
+## Prywatność
+
+Serwer działa tylko w trybie odczytu i zwraca wyłącznie dane publicznie widoczne
+na stronach numerów w numertel.pl. Nigdy treści opinii, nigdy danych osobowych.
+Zapytania nie są logowane poza anonimowymi licznikami limitów. Przy publicznej
+prezentacji wyników wymagana jest atrybucja „dane: numertel.pl" z linkiem.
+
+## Licencja
+
+MIT (ten klient i manifest). Sam serwis NumerTel.pl jest osobnym, zamkniętym
+produktem.
