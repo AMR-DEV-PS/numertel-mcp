@@ -22,7 +22,7 @@ function replyError(id, code, message) {
 }
 
 async function forward(msg) {
-  const headers = { "Content-Type": "application/json", "User-Agent": "numertel-mcp-stdio/1.1" };
+  const headers = { "Content-Type": "application/json", "User-Agent": "numertel-mcp-stdio/1.2" };
   if (KEY) headers["Authorization"] = `Bearer ${KEY}`;
   const res = await fetch(`${BASE}/api/mcp`, {
     method: "POST",
@@ -40,7 +40,7 @@ async function handle(msg) {
       reply(id, {
         protocolVersion: params?.protocolVersion ?? "2025-11-25",
         capabilities: { tools: { listChanged: false }, prompts: { listChanged: false } },
-        serverInfo: { name: "numertel", version: "1.1.0" },
+        serverInfo: { name: "numertel", version: "1.2.0" },
         instructions:
           "NumerTel.pl: sprawdzanie polskich numerów telefonów (spam, oszustwa, wykaz DNO UKE, Biała Lista infolinii) i wskaźniki nadużyć w Polsce.",
       });
