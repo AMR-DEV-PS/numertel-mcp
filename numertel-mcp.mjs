@@ -40,7 +40,7 @@ async function handle(msg) {
       reply(id, {
         protocolVersion: params?.protocolVersion ?? "2025-11-25",
         capabilities: { tools: { listChanged: false }, prompts: { listChanged: false } },
-        serverInfo: { name: "numertel", version: "1.2.0" },
+        serverInfo: { name: "numertel", version: "1.3.0" },
         instructions:
           "NumerTel.pl: sprawdzanie polskich numerów telefonów (spam, oszustwa, wykaz DNO UKE, Biała Lista infolinii) i wskaźniki nadużyć w Polsce.",
       });

@@ -110,12 +110,14 @@ Transport: streamable HTTP (JSON-RPC 2.0). Limit: 30 requests/day/IP.
   CERT Polska's Warning List (today + daily series), DNO registry size and the
   latest numbers from official warnings. Inputs: `days` (1-30, default 7).
   Read-only, structured output, open data (CC-BY).
-- **check_scam_domain** — checks whether a domain, link or email address
-  appears on CERT Polska's official Warning List (a mirror of ~129k scam
-  domains). Accepts a single domain/URL/email or a whole pasted message
-  (domains are extracted, incl. `evil[.]pl` / `hxxp://`); suffix match, so
-  `login.evil.pl` hits `evil.pl`. Deterministic verdict with the listing
-  date. Read-only, structured output.
+- **check_scam_domain** — analyzes a whole pasted suspicious message on two
+  axes: (1) domains, links and email addresses against CERT Polska's official
+  Warning List (a mirror of ~129k scam domains), and (2) Polish phone numbers
+  found in the text against the NumerTel base (UKE **DNO** registry = spoofing,
+  verified official-hotline whitelist, spam reports). Accepts a single
+  domain/URL/email/number or a full message (extracts `evil[.]pl` / `hxxp://`
+  / `+48`); suffix match, so `login.evil.pl` hits `evil.pl`. Deterministic
+  verdict with the listing date, zero LLM. Read-only, structured output.
 - **search** — a Polish phone number OR an institution name (returns verified
   official hotlines from the whitelist). ChatGPT deep-research compatible.
 - **fetch** — full card by `id` from search results.
