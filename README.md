@@ -14,6 +14,7 @@ Polska's public Warning List.
 [![License: MIT](https://img.shields.io/badge/license-MIT-0CCC68)](LICENSE)
 [![Website](https://img.shields.io/badge/website-numertel.pl-0F172A)](https://numertel.pl/dla-deweloperow)
 [![MCP Registry](https://img.shields.io/badge/MCP_registry-pl.numertel%2Fnumertel-blue)](https://registry.modelcontextprotocol.io/v0/servers?search=numertel)
+[![Glama MCP server](https://glama.ai/mcp/servers/@AMR-DEV-PS/numertel-mcp/badge)](https://glama.ai/mcp/servers/@AMR-DEV-PS/numertel-mcp)
 
 [![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=numertel&config=eyJ1cmwiOiJodHRwczovL251bWVydGVsLnBsL2FwaS9tY3AifQ==)
 [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=numertel&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fnumertel.pl%2Fapi%2Fmcp%22%7D)
