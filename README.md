@@ -106,7 +106,7 @@ Transport: streamable HTTP (JSON-RPC 2.0). Limit: 30 requests/day/IP.
   registry** status (an *incoming* call from a DNO number is spoofed by
   definition), verified official-hotline whitelist, report counts.
   Inputs: `number` (string, 9 digits). Read-only, structured output.
-- **pogoda_spamowa** — phone-abuse indicators for Poland: new scam domains on
+- **spam_weather** — phone-abuse indicators for Poland: new scam domains on
   CERT Polska's Warning List (today + daily series), DNO registry size and the
   latest numbers from official warnings. Inputs: `days` (1-30, default 7).
   Read-only, structured output, open data (CC-BY).
@@ -118,6 +118,13 @@ Transport: streamable HTTP (JSON-RPC 2.0). Limit: 30 requests/day/IP.
   domain/URL/email/number or a full message (extracts `evil[.]pl` / `hxxp://`
   / `+48`); suffix match, so `login.evil.pl` hits `evil.pl`. Deterministic
   verdict with the listing date, zero LLM. Read-only, structured output.
+- **find_official_number** — the real, official number of a Polish bank, office
+  or operator. Given an institution name (e.g. ZUS, mBank, NFZ), returns its
+  verified numbers from the whitelist with source link and verification date.
+  Inputs: `institution` (string). Read-only, structured output.
+- **recent_scam_domains** — the latest phishing domains from CERT Polska's
+  official Warning List, defanged (`evil[.]pl`, never clickable).
+  Inputs: `limit` (1-50, default 15). Read-only, open data (CC-BY).
 - **search** — a Polish phone number OR an institution name (returns verified
   official hotlines from the whitelist). ChatGPT deep-research compatible.
 - **fetch** — full card by `id` from search results.
@@ -249,9 +256,16 @@ Transport: streamable HTTP (JSON-RPC 2.0). Limit: 30 zapytań dziennie na adres 
   (połączenie *przychodzące* z numeru DNO jest z definicji sfałszowane),
   wpis z Białej Listy oficjalnych infolinii i liczniki zgłoszeń.
   Wejście: `number` (string, 9 cyfr, `+48` i spacje są usuwane). Tylko odczyt.
-- **pogoda_spamowa** zwraca bieżące wskaźniki nadużyć w Polsce: nowe domeny
+- **spam_weather** zwraca bieżące wskaźniki nadużyć w Polsce: nowe domeny
   oszustów na Liście Ostrzeżeń CERT (dziś / 7 / 30 dni) i rozmiar wykazu DNO.
   Bez parametrów. Tylko odczyt, dane otwarte (CC-BY).
+- **find_official_number** zwraca prawdziwy oficjalny numer banku, urzędu lub
+  operatora. Po nazwie instytucji (np. ZUS, mBank, NFZ) zwraca zweryfikowane
+  numery z Białej Listy ze źródłem i datą weryfikacji. Wejście: `institution`.
+  Tylko odczyt.
+- **recent_scam_domains** zwraca najnowsze domeny phishingowe z Listy Ostrzeżeń
+  CERT Polska, w zapisie defanged (`evil[.]pl`). Wejście: `limit` (1-50,
+  domyślnie 15). Tylko odczyt, dane otwarte (CC-BY).
 
 ## Wariant lokalny (stdio, jeden plik)
 
